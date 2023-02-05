@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name OgameExponent
 // @namespace pimmel
-// @version 0.2
+// @version 0.3
 // @description Make ogame great again
 // @author Actionhans
 // @match https://s192-de.ogame.gameforge.com/game/index.php?page=ingame&component=fleetdispatch*
@@ -337,6 +337,9 @@
 
     //get start system
     const startSystem = Math.round(planetSystem - expoSlotsMax / 2);
+    if(startSystem <= 0){
+        startSystem = 1;
+    }
     console.log("startSystem = " + startSystem);
 
     //get current system
