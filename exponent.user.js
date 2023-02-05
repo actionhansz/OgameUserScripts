@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name OgameStuff
+// @name OgameExponent
 // @namespace pimmel
 // @version 0.1
 // @description Make ogame great again
