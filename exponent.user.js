@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name OgameExponent
 // @namespace pimmel
-// @version 0.1
+// @version 0.2
 // @description Make ogame great again
 // @author Actionhans
 // @match https://s192-de.ogame.gameforge.com/game/index.php?page=ingame&component=fleetdispatch*
@@ -17,7 +17,6 @@
     const fullfleet = false;
     const runOnce = false;
 
-    let EXPOTIME = 1;
     let ecoSpeed = 8;
 
 
@@ -72,8 +71,9 @@
       <div class="clearfloat"></div>
     </div>
     <div class="firstcol fleft">
+    <span class="icon icon_combatunits"></span>
     Expeditionszeit:
-                        <select name="expeditiontime" id="expeditiontime" class="dropdownInitialized" ">
+                        <select name="expeditionTimeSelector" id="expeditionTimeSelector" class="dropdownInitialized" ">
                                                                                                                             <option value="1">1</option>
                                                                                                                             <option value="2">2</option>
                                                                                                                             <option value="3">3</option>
@@ -92,7 +92,10 @@
                         </select>
                         <span class="value">h</span>
     </div>
-    <a id="autoSend" href="javascript:void(0);" class="continue on"><span>autosend</span></a>
+       <div class ="firstcol fright">
+        <a id="abort" href="javascript:void(0);" class="continue on" style="filter: hue-rotate(-90deg);"><span>abort</span></a>
+        <a id="autoSend" href="javascript:void(0);" class="continue on"><span>autosend</span></a>
+   </div>
     <div class="clearfloat"></div>
 </div>`;
 
@@ -241,10 +244,18 @@
         }
     });
 
-    let timePicker = document.querySelector('#expeditiontime');
+    //load expoTime
+    let expoTime = 1;
+    if (GM_getValue("expoTime") != null) {
+        expoTime = GM_getValue("expoTime")
+        document.getElementById("expeditionTimeSelector").value = expoTime
+    }
+
+    let timePicker = document.querySelector('#expeditionTimeSelector');
     timePicker.addEventListener('change', function () {
-        EXPOTIME = timePicker.value;
-        console.log(EXPOTIME)
+        expoTime = timePicker.value;
+        GM_setValue("expoTime", expoTime);
+        console.log("saved Expo Time to: " + expoTime);
     });
 
 
@@ -273,6 +284,17 @@
         shipSelect.forEach((shipSelect) => {
             GM_setValue(shipSelect.name, shipSelect.value);
         });
+        fleet.fighterLight = GM_getValue("fighterLight")
+        fleet.fighterHeavy = GM_getValue("fighterHeavy")
+        fleet.cruiser = GM_getValue("cruiser")
+        fleet.battleship = GM_getValue("battleship")
+        fleet.interceptor = GM_getValue("interceptor")
+        fleet.destroyer = GM_getValue("destroyer")
+        fleet.reaper = GM_getValue("reaper")
+        fleet.explorer = GM_getValue("explorer")
+        fleet.espionageProbe = GM_getValue("espionageProbe")
+        fleet.transporterLarge = GM_getValue("transporterLarge")
+        fleet.transporterSmall = GM_getValue("transporterSmall")
         location.href = `javascript:fadeBox("Fleet Saved!", false, () => {}, 2500);`;
     }
 
@@ -331,7 +353,7 @@
             for (const [key, value] of Object.entries(fleet)) {
                 console.log("Number of " + key + ": " + Number($('.' + key + ' .amount').attr('data-value')));
                 if ((Number($('.' + key + ' .amount').attr('data-value')) >= value * usableSlots) && (fullfleet == false)) {
-                    GM_setValue(key, value);
+                    // GM_setValue(key, value);
                     console.log("owned " + key + " above selected " + key + ". using userselection (" + value + ")");
                 } else {
                     if (key == "explorer" || key == "espionageProbe") {
@@ -346,6 +368,11 @@
 
             location.reload();
         });
+    });
+    let abortBtn = document.querySelector('#abort');
+    abortBtn.addEventListener('click', function () {
+        GM_setValue('running', false);
+        location.reload();
     });
 
     //setting running false if slots full
@@ -383,8 +410,10 @@
             //fill position
             $('input#position').val('16').keyup();
 
-            if (EXPOTIME > 1) {
-                document.querySelector('#expeditiontime').value = EXPOTIME;
+            console.log("expoTime = " + GM_getValue("expoTime"));
+            if (GM_getValue("expoTime") > 1) {
+                console.log("expoTime > 1" + GM_getValue("expoTime"));
+                document.querySelector('#expeditiontime').value = GM_getValue("expoTime");
             }
 
             //send fleet after random time
