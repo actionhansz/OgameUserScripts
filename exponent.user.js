@@ -54,6 +54,17 @@
             transporterSmall: 0,
             transporterLarge: 3200
         }
+        GM_setValue("fighterLight", fleet.fighterLight);
+        GM_setValue("fighterHeavy", fleet.fighterHeavy)
+        GM_setValue("cruiser", 0)
+        GM_setValue("battleship", 0)
+        GM_setValue("interceptor", 0)
+        GM_setValue("destroyer", 0)
+        GM_setValue("reaper", 1)
+        GM_setValue("explorer", 1)
+        GM_setValue("espionageProbe", 1)
+        GM_setValue("transporterSmall", 0)
+        GM_setValue("transporterLarge", 3200)
     }
 
     console.log(fleet)
