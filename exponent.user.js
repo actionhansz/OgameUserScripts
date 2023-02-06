@@ -398,7 +398,7 @@
     if (GM_getValue("running") == true && usableSlots > 0 && toggleExecute == true) {
         $(document).ready(function () {
             //wait time after reload
-            let randomTimeoutreload = Math.random() * (5000 - 3000) + 3000;
+            let randomTimeoutreload = Math.random() * (3000 - 2000) + 2000;
             console.log("Timeout (reload): " + randomTimeoutreload);
             setTimeout(function () {
                 //autoReload do nothing
@@ -435,7 +435,7 @@
             }
 
             //send fleet after random time
-            let randomTimeoutsend = Math.random() * (11000 - 4000) + 4000;
+            let randomTimeoutsend = Math.random() * (11000 - 4500) + 4500;
             setTimeout(function () {
                 $('[id=sendFleet]').click();
             }, randomTimeoutsend);
