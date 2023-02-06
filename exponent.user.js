@@ -397,8 +397,9 @@
     //execute when running is true
     if (GM_getValue("running") == true && usableSlots > 0 && toggleExecute == true) {
         $(document).ready(function () {
+            let randomFill = Math.random() * (1000 - 500) + 500;
             //wait time after reload
-            let randomTimeoutreload = Math.random() * (4000 - 2000) + 2000;
+            let randomTimeoutreload = Math.random() * (5000 - 3000) + 3000;
             console.log("Timeout (reload): " + randomTimeoutreload);
             setTimeout(function () {
                 //autoReload do nothing
@@ -408,7 +409,9 @@
             //fill Ships
             for (const [key, value] of Object.entries(fleet)) {
                 console.log("Filling " + key + " with " + GM_getValue(key) + " ships");
-                $('[name=' + key + ']').val(GM_getValue(key)).keyup();
+                setTimeout(function () {
+                    $('[name=' + key + ']').val(GM_getValue(key)).keyup();
+                }, randomFill);
             }
 
             //go to next page
@@ -419,15 +422,23 @@
             }, randomTimeoutWeiter);
 
             //fill system
-            $('input#system').val(currentSystem).keyup();
+            setTimeout(function () {
+                $('input#system').val(currentSystem).keyup();
+            }, randomFill);
 
             //fill position
-            $('input#position').val('16').keyup();
+            setTimeout(function () {
+                $('input#position').val('16').keyup();
+            }, randomFill);
+
+
 
             console.log("expoTime = " + GM_getValue("expoTime"));
             if (GM_getValue("expoTime") > 1) {
                 console.log("expoTime > 1" + GM_getValue("expoTime"));
-                document.querySelector('#expeditiontime').value = GM_getValue("expoTime");
+                setTimeout(function () {
+                    document.querySelector('#expeditiontime').value = GM_getValue("expoTime");
+                }, randomFill);
             }
 
             //send fleet after random time
