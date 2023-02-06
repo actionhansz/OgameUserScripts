@@ -347,7 +347,7 @@
     console.log("planetSystem = " + planetSystem);
 
     //get start system
-    const startSystem = Math.round(planetSystem - expoSlotsMax / 2);
+    let startSystem = Math.round(planetSystem - expoSlotsMax / 2);
     if(startSystem <= 0){
         startSystem = 1;
     }
