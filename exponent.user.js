@@ -397,7 +397,6 @@
     //execute when running is true
     if (GM_getValue("running") == true && usableSlots > 0 && toggleExecute == true) {
         $(document).ready(function () {
-            let randomFill = Math.random() * (1000 - 500) + 500;
             //wait time after reload
             let randomTimeoutreload = Math.random() * (5000 - 3000) + 3000;
             console.log("Timeout (reload): " + randomTimeoutreload);
@@ -409,9 +408,10 @@
             //fill Ships
             for (const [key, value] of Object.entries(fleet)) {
                 console.log("Filling " + key + " with " + GM_getValue(key) + " ships");
+                let randomFill1 = Math.random() * (1500 - 700) + 700;
                 setTimeout(function () {
                     $('[name=' + key + ']').val(GM_getValue(key)).keyup();
-                }, randomFill);
+                }, randomFill1);
             }
 
             //go to next page
@@ -422,16 +422,16 @@
             }, randomTimeoutWeiter);
 
             //fill system
+            let randomFill2= Math.random() * (1500 - 700) + 700;
             setTimeout(function () {
                 $('input#system').val(currentSystem).keyup();
-            }, randomFill);
+            }, randomFill2);
 
-            // //fill position
-            // setTimeout(function () {
-            //     $('input#position').val('16').keyup();
-            // }, randomFill);
-
-
+            //fill position
+            let randomFill3= Math.random() * (1500 - 700) + 700;
+            setTimeout(function () {
+                $('input#position').val('16').keyup();
+            }, randomFill3);
 
             console.log("expoTime = " + GM_getValue("expoTime"));
             if (GM_getValue("expoTime") > 1) {
@@ -442,8 +442,7 @@
             }
 
             //send fleet after random time
-            let randomTimeoutsend = Math.random() * (7500 - 2000) + 2000;
-            console.log("Timeout (send): " + randomTimeoutsend);
+            let randomTimeoutsend = Math.random() * (7500 - 2500) + 2500;
             setTimeout(function () {
                 $('[id=sendFleet]').click();
             }, randomTimeoutsend);
@@ -454,7 +453,6 @@
 
             //reload if something went wrong
             let safetyreload = Math.random() * (16000 - 10000) + 10000;
-            console.log("Timeout (reload): " + safetyreload);
             setTimeout(function () {
                 location.reload();
             }, safetyreload);
