@@ -426,10 +426,10 @@
                 $('input#system').val(currentSystem).keyup();
             }, randomFill);
 
-            //fill position
-            setTimeout(function () {
-                $('input#position').val('16').keyup();
-            }, randomFill);
+            // //fill position
+            // setTimeout(function () {
+            //     $('input#position').val('16').keyup();
+            // }, randomFill);
 
 
 
