@@ -426,12 +426,11 @@
                 $('[id=continueToFleet2]').click();
             }, randomTimeoutWeiter);
 
+            //fill expo time
             console.log("expoTime = " + GM_getValue("expoTime"));
             if (GM_getValue("expoTime") > 1) {
                 console.log("expoTime > 1" + GM_getValue("expoTime"));
-                setTimeout(function () {
-                    document.querySelector('#expeditiontime').value = GM_getValue("expoTime");
-                }, randomFill);
+                document.querySelector('#expeditiontime').value = GM_getValue("expoTime");
             }
 
             //send fleet after random time
