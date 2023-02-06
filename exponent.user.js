@@ -348,7 +348,7 @@
 
     //get start system
     let startSystem = Math.round(planetSystem - expoSlotsMax / 2);
-    if(startSystem <= 0){
+    if (startSystem <= 0) {
         startSystem = 1;
     }
     console.log("startSystem = " + startSystem);
@@ -422,16 +422,10 @@
             }, randomTimeoutWeiter);
 
             //fill system
-            let randomFill2= Math.random() * (1500 - 700) + 700;
-            setTimeout(function () {
-                $('input#system').val(currentSystem).keyup();
-            }, randomFill2);
+            $('input#system').val(currentSystem).keyup();
 
             //fill position
-            let randomFill3= Math.random() * (1500 - 700) + 700;
-            setTimeout(function () {
-                $('input#position').val('16').keyup();
-            }, randomFill3);
+            $('input#position').val('16').keyup();
 
             console.log("expoTime = " + GM_getValue("expoTime"));
             if (GM_getValue("expoTime") > 1) {
