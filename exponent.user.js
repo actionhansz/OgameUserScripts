@@ -408,7 +408,7 @@
             //fill Ships
             for (const [key, value] of Object.entries(fleet)) {
                 console.log("Filling " + key + " with " + GM_getValue(key) + " ships");
-                let randomFill1 = Math.random() * (2000 - 1000) + 1000;
+                let randomFill1 = Math.random() * (1000 - 500) + 500;
                 setTimeout(function () {
                     if (GM_getValue(key) > 0) {
                         $('[name=' + key + ']').val(GM_getValue(key)).keyup();
@@ -416,28 +416,18 @@
                 }, randomFill1);
             }
 
+            //fill system
+            $('input#system').val(currentSystem).keyup();
+
+            //fill position
+            $('input#position').val('16').keyup();
+
             //go to next page
             let randomTimeoutWeiter = Math.random() * (2000 - 1500) + 1500;
             console.log("Timeout (reload): " + randomTimeoutWeiter);
             setTimeout(function () {
                 $('[id=continueToFleet2]').click();
             }, randomTimeoutWeiter);
-
-            //fill system
-            let randomFill2 = Math.random() * (2000 - 1500) + 1500;
-            setTimeout(function () {
-                $('input#system').val(currentSystem).keyup();
-            }, randomFill2);
-
-            let randomFill3 = Math.random() * (2000 - 1500) + 1500;
-            setTimeout(function () {
-                $('input#position').val('16').keyup();
-            }, randomFill3);
-
-            let randomchill = Math.random() * (3000 - 1500) + 1500;
-            setTimeout(function () {
-                //do nothing
-            }, randomchill);
 
             console.log("expoTime = " + GM_getValue("expoTime"));
             if (GM_getValue("expoTime") > 1) {
