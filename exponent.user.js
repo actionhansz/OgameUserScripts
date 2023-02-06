@@ -408,12 +408,9 @@
             //fill Ships
             for (const [key, value] of Object.entries(fleet)) {
                 console.log("Filling " + key + " with " + GM_getValue(key) + " ships");
-                let randomFill1 = Math.random() * (1000 - 500) + 500;
-                setTimeout(function () {
-                    if (GM_getValue(key) > 0) {
-                        $('[name=' + key + ']').val(GM_getValue(key)).keyup();
-                    }
-                }, randomFill1);
+                if (GM_getValue(key) > 0) {
+                    $('[name=' + key + ']').val(GM_getValue(key)).keyup();
+                }
             }
 
             //fill system
