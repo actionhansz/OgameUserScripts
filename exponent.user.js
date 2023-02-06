@@ -435,7 +435,7 @@
             }
 
             //send fleet after random time
-            let randomTimeoutsend = Math.random() * (7500 - 2500) + 2500;
+            let randomTimeoutsend = Math.random() * (11000 - 4000) + 4000;
             setTimeout(function () {
                 $('[id=sendFleet]').click();
             }, randomTimeoutsend);
@@ -445,7 +445,7 @@
             }
 
             //reload if something went wrong
-            let safetyreload = Math.random() * (16000 - 10000) + 10000;
+            let safetyreload = Math.random() * (16000 - 14000) + 14000;
             setTimeout(function () {
                 location.reload();
             }, safetyreload);
