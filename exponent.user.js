@@ -401,53 +401,56 @@
             let randomTimeoutreload = Math.random() * (3000 - 2000) + 2000;
             console.log("Timeout (reload): " + randomTimeoutreload);
             setTimeout(function () {
-                //autoReload do nothing
-            }, randomTimeoutreload);
-
-            console.log("running is true");
-            //fill Ships
-            for (const [key, value] of Object.entries(fleet)) {
-                console.log("Filling " + key + " with " + GM_getValue(key) + " ships");
-                if (GM_getValue(key) > 0) {
-                    $('[name=' + key + ']').val(GM_getValue(key)).keyup();
+                console.log("running is true");
+                //fill Ships
+                for (const [key, value] of Object.entries(fleet)) {
+                    console.log("Filling " + key + " with " + GM_getValue(key) + " ships");
+                    if (GM_getValue(key) > 0) {
+                        $('[name=' + key + ']').val(GM_getValue(key)).keyup();
+                    }
                 }
-            }
 
-            //fill system
-            $('input#system').val(currentSystem).keyup();
+                //go to next page
+                let randomTimeoutWeiter = Math.random() * (2000 - 1500) + 1500;
+                console.log("Timeout (reload): " + randomTimeoutWeiter);
+                setTimeout(function () {
+                    $('[id=continueToFleet2]').click();
 
-            //fill position
-            $('input#position').val('16').keyup();
+                    //fill system
+                    let randomTimeoutSystem = Math.random() * (1500 - 500) + 500;
+                    setTimeout(function () {
+                        $('input#system').val(currentSystem).keyup();
+                        //fill position
+                        let randomTimeoutPosition = Math.random() * (2000 - 700) + 700;
+                        setTimeout(function () {
+                            $('input#position').val('16').keyup();
 
-            //go to next page
-            let randomTimeoutWeiter = Math.random() * (2000 - 1500) + 1500;
-            console.log("Timeout (reload): " + randomTimeoutWeiter);
-            setTimeout(function () {
-                $('[id=continueToFleet2]').click();
-            }, randomTimeoutWeiter);
+                            //fill expo time
+                            console.log("expoTime = " + GM_getValue("expoTime"));
+                            if (GM_getValue("expoTime") > 1) {
+                                console.log("expoTime > 1" + GM_getValue("expoTime"));
+                                document.querySelector('#expeditiontime').value = GM_getValue("expoTime");
+                            }
 
-            //fill expo time
-            console.log("expoTime = " + GM_getValue("expoTime"));
-            if (GM_getValue("expoTime") > 1) {
-                console.log("expoTime > 1" + GM_getValue("expoTime"));
-                document.querySelector('#expeditiontime').value = GM_getValue("expoTime");
-            }
+                            //send fleet after random time
+                            let randomTimeoutsend = Math.random() * (2500 - 1100) + 1100;
+                            setTimeout(function () {
+                                $('[id=sendFleet]').click();
+                            }, randomTimeoutsend);
 
-            //send fleet after random time
-            let randomTimeoutsend = Math.random() * (11000 - 4500) + 4500;
-            setTimeout(function () {
-                $('[id=sendFleet]').click();
-            }, randomTimeoutsend);
+                            if (runOnce == true) {
+                                GM_setValue('running', false);
+                            }
 
-            if (runOnce == true) {
-                GM_setValue('running', false);
-            }
-
-            //reload if something went wrong
-            let safetyreload = Math.random() * (16000 - 14000) + 14000;
-            setTimeout(function () {
-                location.reload();
-            }, safetyreload);
+                            //reload if something went wrong
+                            let safetyreload = Math.random() * (16000 - 14000) + 14000;
+                            setTimeout(function () {
+                                location.reload();
+                            }, safetyreload);
+                        }, randomTimeoutPosition);
+                    }, randomTimeoutSystem);
+                }, randomTimeoutWeiter);
+            }, randomTimeoutreload);
         });
     }
 
