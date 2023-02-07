@@ -417,11 +417,11 @@
                     $('[id=continueToFleet2]').click();
 
                     //fill system
-                    let randomTimeoutSystem = Math.random() * (1500 - 500) + 500;
+                    let randomTimeoutSystem = Math.random() * (2100 - 800) + 800;
                     setTimeout(function () {
                         $('input#system').val(currentSystem).keyup();
                         //fill position
-                        let randomTimeoutPosition = Math.random() * (2000 - 700) + 700;
+                        let randomTimeoutPosition = Math.random() * (2000 - 800) + 800;
                         setTimeout(function () {
                             $('input#position').val('16').keyup();
 
