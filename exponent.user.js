@@ -4,7 +4,7 @@
 // @version 0.6
 // @description Make ogame great again
 // @author Actionhans
-// @match https://s192-de.ogame.gameforge.com/game/index.php?page=ingame&component=fleetdispatch*
+// @match *://*/*?page=ingame&component=fleetdispatch*
 // @grant   GM_getValue
 // @grant   GM_setValue
 // ==/UserScript==
@@ -346,15 +346,26 @@
     const planetSystem = document.querySelector('input#system').value;
     console.log("planetSystem = " + planetSystem);
 
+
     //get start system
     let startSystem = Math.round(planetSystem - expoSlotsMax / 2);
     if (startSystem <= 0) {
         startSystem = 1;
     }
+    if (planetSystem + Math.round(expoSlotsMax / 2) >= 499) {
+        startSystem = 499;
+    }
     console.log("startSystem = " + startSystem);
 
     //get current system
-    const currentSystem = startSystem + parseInt(expoSlotsUsed);
+    let currentSystem;
+    if (startSystem == 499) {
+        currentSystem = startSystem - parseInt(expoSlotsUsed);
+    }
+    else {
+        currentSystem = startSystem + parseInt(expoSlotsUsed);
+    }
+
     console.log("currentExpoSystem = " + currentSystem);
 
     let startBtn = document.querySelector('#autoSend');
