@@ -403,6 +403,7 @@
     //setting running false if slots full
     if (usableSlots == 0) {
         GM_setValue('running', false);
+        (GM_setValue("expoTime", 1));
     }
 
     //execute when running is true
