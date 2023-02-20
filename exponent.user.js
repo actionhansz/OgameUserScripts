@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name OgameExponent
 // @namespace pimmel
-// @version 0.6
+// @version 0.7
 // @description Make ogame great again
 // @author Actionhans
 // @match *://*/*?page=ingame&component=fleetdispatch*
