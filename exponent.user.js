@@ -352,7 +352,8 @@
     if (startSystem <= 0) {
         startSystem = 1;
     }
-    if (planetSystem + Math.round(expoSlotsMax / 2) >= 499) {
+
+    if (parseInt(planetSystem) + Math.round(expoSlotsMax / 2) >= 499) {
         startSystem = 499;
     }
     console.log("startSystem = " + startSystem);
