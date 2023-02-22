@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name OgameExponent
 // @namespace pimmel
-// @version 0.7
+// @version 0.8
 // @description Make ogame great again
 // @author Actionhans
 // @match *://*/*?page=ingame&component=fleetdispatch*
@@ -101,7 +101,15 @@
                                                                                                                             <option value="14">14</option>
                                                                                                                             <option value="15">15</option>
                         </select>
-                        <span class="value">h</span>
+                        <span class="value">h</span> <br>
+                        <span class="icon icon_combatunits"></span>
+    System Logic:
+                        <select name="fleetSendLogic" id="fleetSendLogic" class="dropdownInitialized" ">
+                                                                                                                            <option value="1">Linear Slots</option>
+                                                                                                                            <option value="2">Smart (free Slots)</option>
+                                                                                                                            <option value="3">Insys</option>
+
+                        </select>
     </div>
        <div class ="firstcol fright">
         <a id="abort" href="javascript:void(0);" class="continue on" style="filter: hue-rotate(-90deg);"><span>abort</span></a>
@@ -269,6 +277,19 @@
         console.log("saved Expo Time to: " + expoTime);
     });
 
+    //load SendLogic
+    let fleetSendLogic = 2;
+    if (GM_getValue("fleetSendLogic") != null) {
+        fleetSendLogic = GM_getValue("fleetSendLogic")
+        document.getElementById("fleetSendLogic").value = fleetSendLogic
+        console.log("fleetSendLogic loaded! - " + fleetSendLogic)
+    }
+        let logicPicker = document.querySelector('#fleetSendLogic');
+        logicPicker.addEventListener('change', function () {
+            fleetSendLogic = logicPicker.value;
+            GM_setValue("fleetSendLogic", fleetSendLogic);
+            console.log("saved fleet Send Logic to: " + fleetSendLogic);
+        });
 
     let shipSelect = document.querySelectorAll('.expeditionSchwanz');
     let saveFleet = document.querySelector('#saveFleet');
@@ -280,6 +301,21 @@
             deleteShips(shipSelect);
         }
     );
+
+    function isSystemUsedByExpo(system){
+        let eventTable = document.getElementById("eventContent");
+        for (let i = 0, row; row = eventTable.rows[i]; i++) {
+           let title = row.cells[2].querySelector("img").title
+           if (title.includes("Expedition")){
+                let destination = row.cells[8].querySelector("a").text
+                let targetSystem = destination.split(":")[1]
+                if(system == targetSystem){
+                    return true
+                }
+           }
+        }
+        return false
+    }
 
     function deleteShips(shipSelect) {
         shipSelect.forEach((shipSelect) => {
@@ -358,14 +394,41 @@
     }
     console.log("startSystem = " + startSystem);
 
+
     //get current system
     let currentSystem;
-    if (startSystem == 499) {
-        currentSystem = startSystem - parseInt(expoSlotsUsed);
+    //smart
+    if (fleetSendLogic == 2){
+        console.log("Using Smart logic to determine Expo System")
+        currentSystem = startSystem
+        while (isSystemUsedByExpo(currentSystem)){
+            console.log("Smart: System in Use: " + currentSystem)
+            if(startSystem == 499) {
+                currentSystem = currentSystem - 1
+                console.log("Smart - new currentSystem: " + currentSystem)
+            }
+            else{
+                currentSystem = currentSystem + 1
+                console.log("Smart - new currentSystem: " + currentSystem)
+            }
+        }
     }
-    else {
-        currentSystem = startSystem + parseInt(expoSlotsUsed);
+    //default
+    if (fleetSendLogic == 1){
+        console.log("Using expo count logic to determine Expo System")
+        if (startSystem == 499) {
+            currentSystem = startSystem - parseInt(expoSlotsUsed);
+        }
+        else {
+            currentSystem = startSystem + parseInt(expoSlotsUsed);
+        }
     }
+    //insys
+    if (fleetSendLogic == 3){
+        console.log("Using Start Planet coords as Expo System")
+        currentSystem = planetSystem
+    }
+
 
     console.log("currentExpoSystem = " + currentSystem);
 
